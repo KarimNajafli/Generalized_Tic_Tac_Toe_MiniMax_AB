@@ -61,17 +61,49 @@ The agent scales to larger boards (4×4, 5×5) while maintaining tactical soundn
 
 ## 3×3 Board
 
- Alpha-Beta is ~5× faster than Minimax, explores ~97% fewer nodes
- Move ordering adds ~1.5× improvement
+======================================================================
+3×3 Board: Minimax vs Alpha-Beta Performance
+======================================================================
+
+Algorithm            Time (s)     Nodes        Cutoffs      Move
+----------------------------------------------------------------------
+Minimax              22.1820      549,946      N/A          (0, 0)
+Alpha-Beta           0.8492       18,297       8,180        (0, 0)
+Alpha-Beta+Order     0.3533       1,908        852          (1, 1)
+
+ Performance Analysis:
+   • Speedup (AB vs MM): 26.12x
+   • Node reduction: 96.7%
+   • Ordering improvement: 2.40x faster
+   • Pruning effectiveness: 44.7%
 
 ## 4×4 Board (depth=3)
 
- Move ordering reduces time 2.7×, increases pruning 2.3×
+======================================================================
+4×4 Board: Move Ordering Impact
+======================================================================
+
+Configuration        Time (s)     Nodes        Cutoffs
+------------------------------------------------------------
+No ordering          7.2047       109,952      49,638
+With ordering        1.4193       2,241        1,028
+
+ Move Ordering Benefits:
+   • Time reduction: 5.08x faster
+   • Node reduction: 98.0%
+   • Cutoff increase: 0.02x more
 
 ## Scalability
+======================================================================
+Scalability Test: Different Board Sizes
+======================================================================
 
- Depth 3-4 sufficient for 4×4, depth 2-3 for 5×5
- Heuristics prevent major errors at limited depth
+Configuration             Time (s)     Nodes        First Move
+----------------------------------------------------------------------
+3×3, full search          0.3784       1908         (1, 1)
+4×4 (k=3), depth=3        0.1622       ~4096        (2, 2)
+4×4 (k=4), depth=3        0.0911       ~4096        (2, 2)
+5×5 (k=4), depth=2        0.1274       ~625         (2, 2)
 
 ---
 
